@@ -1,14 +1,21 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
-
-        Scanner scanFile = new Scanner(new File("example.txt"));
+    public static void main(String[] args) throws FileNotFoundException, URISyntaxException {
+        Scanner scanFile;
+        URL resource = Main.class.getClassLoader().getResource("arbre.txt");
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found!");
+        } else {
+            scanFile = new Scanner(new File(resource.toURI()));
+        }
         String line = scanFile.nextLine();
         Sommet first = new Sommet(Integer.parseInt(line.substring(0, 1)));
         List<Sommet> allPastSommet = new ArrayList<>();
