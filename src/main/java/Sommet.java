@@ -37,4 +37,10 @@ public class Sommet {
     public void marque() {
         this.marque = true;
     }
+    
+    @Override
+    public String toString() {
+    	// TODO Auto-generated method stub
+    	return num + "";
+    }
 }
