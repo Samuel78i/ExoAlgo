@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,7 +15,7 @@ public class Main {
     	
     	try {
 			sommets = lecture("arbre.txt");
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			System.err.println("Erreur dans l'ouverture du fichier.");
 			return;
 		}
@@ -49,10 +52,12 @@ public class Main {
         
     }
     
-    private static List<Sommet> lecture(String chemin) throws IOException {
-    	BufferedReader br = new BufferedReader(new FileReader(chemin));
+    private static List<Sommet> lecture(String chemin) throws IOException, URISyntaxException {
+        URL resource = Main.class.getClassLoader().getResource(chemin);
+        assert resource != null;
+        BufferedReader br = new BufferedReader(new FileReader(new File(resource.toURI())));
         
-        List<Sommet> sommets = new ArrayList<Sommet>();
+        List<Sommet> sommets = new ArrayList<>();
         
         String line;
         while ((line = br.readLine()) != null) {
